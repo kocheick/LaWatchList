@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">LaWatchlist</string>
+    <string name="movie_title">Movie Title</string>
+    <string name="movie_summary"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque orci enim, convallis id lacinia vitae, rutrum non justo. Suspendisse quis lorem viverra, interdum lacus ac, molestie ex. Sed lacinia tempor orci, at consequat massa hendrerit. </string>
+    <string name="movie_duration">~ %1$dmin </string>
+    <string name="movie_release_date">DATE</string>
+    <string name="image_description">Movie Poster Image</string>
+    <string name="welcome_message">Welcome to Movie App</string>
+
+    <string name="deleted_movie">%1$s has been deleted</string>
+    <string name="re_added_movie">%1$s is re-added !</string>
+
+    <string name="login_denied">Login DENIED !</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="login_text">Login</string>
+    <string name="logout_text">Logout</string>
+    <string name="clear_list_text">Clear this list</string>
+    <string name="home_fragment_title">Movies</string>
+    <string name="favorites_fragment_title">Favorites</string>
+    <string name="search_fragment_title">Search</string>
+    <string name="undo">Undo</string>
+    <string name="database_name">MOVIE_DB</string>
+    <string name="action_search_title">Search</string>
+    <string name="trending">Trending</string>
+    <string name="top_rated">Top Rated</string>
+
+</resources>

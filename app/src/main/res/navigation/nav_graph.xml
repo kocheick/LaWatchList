@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.lawatchlist.ui.fragments.search.SearchFragment"
+        android:label="fragment_movie_list"
+        tools:layout="@layout/fragment_search_movie" >
+        <action
+            android:id="@+id/action_searchScreen_to_detailScreen"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.lawatchlist.ui.fragments.favorites.FavoritesFragment"
+        android:label="fragment_favorite_movies"
+        tools:layout="@layout/fragment_favorite_movies" >
+        <action
+            android:id="@+id/action_favoriteScreen_to_detailScreen"
+            app:destination="@id/movieDetailFragment"
+            app:popUpTo="@id/favoritesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.example.lawatchlist.ui.fragments.detail.DetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="movieToDisplay"
+            app:argType="com.example.lawatchlist.model.Movie" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_to_search_fragment"
+        app:destination="@id/searchFragment"
+        app:enterAnim="@android:anim/fade_in"
+        app:exitAnim="@android:anim/fade_out" />
+    <action
+        android:id="@+id/action_global_to_favorite_fragment"
+        app:destination="@id/favoritesFragment"
+        app:enterAnim="@android:anim/fade_in"
+        app:exitAnim="@android:anim/fade_out" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.lawatchlist.ui.fragments.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeScreen_to_DetailScreen"
+            app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
+    <action android:id="@+id/action_global_home_Fragment" app:destination="@id/homeFragment" />
+</navigation>
