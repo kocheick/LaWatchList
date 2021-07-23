@@ -58,7 +58,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
             _topRated = topMovies as MutableLiveData<List<Movie>>
 
             // _showLoading.value = trendingMovies.value.isNullOrEmpty() or topRated.value.isNullOrEmpty()
-            println("HOME VM -> ${trendingMovies.value?.size}")
             delay(50)
             _showLoading.value = false
 

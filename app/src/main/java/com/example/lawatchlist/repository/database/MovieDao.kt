@@ -2,6 +2,7 @@ package com.example.lawatchlist.repository.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.lawatchlist.model.Movie
 import com.example.lawatchlist.model.MovieDBModel
 
 
@@ -21,6 +22,14 @@ interface MovieDao {
     suspend fun getMovieById(movieId: Int): MovieDBModel?
 
     // Favorites
+
+    @Query("""
+  SELECT *FROM movie_table
+  JOIN movie_fts ON movie_table.title = movie_fts.title AND movie_table.isFavorite =1
+  WHERE movie_fts MATCH :query
+""")
+    suspend fun searchFavorites(query:String) : List<MovieDBModel>
+
     @Query("SELECT * FROM movie_table WHERE isFavorite ==1 /*:isFavorite*/ ")
     fun getFavoritedMovies(/*isFavorite: Boolean = true*/): LiveData<List<MovieDBModel>>
 

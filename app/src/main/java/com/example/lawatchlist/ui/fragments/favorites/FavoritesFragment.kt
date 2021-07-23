@@ -23,7 +23,6 @@ import kotlinx.coroutines.InternalCoroutinesApi
 
 @InternalCoroutinesApi
 class FavoritesFragment : Fragment() {
-//TODO Implement local search for favorited items
     private lateinit var adapter: MovieAdapter
     private val favoritesViewModel: FavoritesViewModel by viewModels()
 
@@ -111,8 +110,20 @@ class FavoritesFragment : Fragment() {
         inflater.inflate(R.menu.user_menu, menu)
         val menuItem = menu.findItem(R.id.action_search)
 
-        // TODO implement room local search
         val searchView = menuItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (query != null) {
+                    favoritesViewModel.searchFavorite(query)
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText?.length!! > 2) newText.let { favoritesViewModel.searchFavorite(it) }
+                return true
+            }
+        })
 
     }
 
@@ -125,9 +136,9 @@ class FavoritesFragment : Fragment() {
     }
 
     private fun logOut() {
-        activity?.getSharedPreferences("state", Context.MODE_PRIVATE)
+        activity?.getSharedPreferences(getString(R.string.user_state), Context.MODE_PRIVATE)
             ?.edit()
-            ?.putBoolean("loggedStatus", false)
+            ?.putBoolean(getString(R.string.log_status), false)
             ?.apply()
 
         val intent = Intent(activity, LoginActivity::class.java)

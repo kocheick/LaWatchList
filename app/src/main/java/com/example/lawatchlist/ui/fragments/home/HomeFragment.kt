@@ -63,7 +63,6 @@ topRatedAdapter.clickListener = {navigateToDetailScreen(it)}
         })
         viewModel.topRated.observe(viewLifecycleOwner, { list ->
             list?.let {
-                println("HERE IS YOUR LIST SIZE ${it.size}")
                 topRatedAdapter.showMovies(it)
             }
         })

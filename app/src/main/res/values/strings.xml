@@ -24,5 +24,7 @@
     <string name="action_search_title">Search</string>
     <string name="trending">Trending</string>
     <string name="top_rated">Top Rated</string>
+    <string name="user_state">user_state</string>
+    <string name="log_status">log_status</string>
 
 </resources>

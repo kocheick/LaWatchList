@@ -13,30 +13,18 @@ class ViewHolder(private val binding: MovieListItemBinding, private val onClickL
 
 init {
     with(binding) {
+        if (isFavoritesFrmt) favoriteButtonView.visibility = View.INVISIBLE
 
-
+        favoriteButtonView.setOnClickListener {
+            onClickListener(bindingAdapterPosition, it)
+        }
+        movieCard.setOnClickListener { onClickListener(bindingAdapterPosition, it) }
     }
 }
 //TODO display item genres
     fun bind(movie: Movie  ) {
 
         with(binding) {
-            if (isFavoritesFrmt) favoriteButtonView.visibility = View.INVISIBLE
-            favoriteButtonView.setOnClickListener {
-//                if (movie.isFavorite) {
-//                    (it as LottieAnimationView).apply {
-//                        progress = 0.97524375f
-//                        speed = -1.5f
-//                        playAnimation() } }
-//                else (it as LottieAnimationView).apply {
-//                    progress = 0.0f
-//                    speed= 1.5f
-//                    playAnimation()
-//                }
-                onClickListener(bindingAdapterPosition, it)
-            }
-            movieCard.setOnClickListener { onClickListener(bindingAdapterPosition, it) }
-
 
             val coverUrl = movie.images?.posterPath ?: ""
           //  val duration: String = if(movie.duration !=null ) itemView.context.getString(R.string.movie_duration, movie.duration) else ""

@@ -63,13 +63,6 @@ class MovieRepository(private val movieDao: MovieDao) {
 
     // 7200000 every 2h
     private fun isFetchNeeded(savedAt: Long): Boolean {
-        println(
-            "YOUR FETCH -> NOW ${convertLongToTime(timestamp)} && <--- || --> ${
-                convertLongToTime(
-                    System.currentTimeMillis()
-                )
-            }"
-        )
 
         // return savedAt + 10000 < System.currentTimeMillis()
         return true
@@ -113,4 +106,6 @@ class MovieRepository(private val movieDao: MovieDao) {
     }
 
     suspend fun updateList(fav: List<MovieDBModel>) = movieDao.updateList(fav)
+
+    suspend fun searchFavorite(query: String): List<MovieDBModel> = movieDao.searchFavorites(query)
 }

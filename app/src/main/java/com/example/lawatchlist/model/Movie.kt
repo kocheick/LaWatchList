@@ -46,6 +46,16 @@ data class MovieDBModel(
 
     )
 
+@Entity(tableName = "movie_fts")
+@Fts4(contentEntity = MovieDBModel::class)
+data class MovieFTS(
+    @ColumnInfo(name = "title")
+    val title: String,
+    @ColumnInfo(name = "summary")
+    val summary: String,
+    @ColumnInfo(name = "release_date")
+    val releaseDate: String
+)
 
 
 @JsonClass(generateAdapter = true)

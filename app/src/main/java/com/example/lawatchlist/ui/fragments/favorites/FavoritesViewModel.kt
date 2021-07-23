@@ -16,8 +16,8 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     private lateinit var _liveDataMovies: MutableLiveData<List<MovieDBModel>>
     val favoriteMovies: LiveData<List<MovieDBModel>> get() = _liveDataMovies
 
-    private val _movieToDelete: MutableLiveData<Movie> by lazy {  MutableLiveData<Movie>()}
-    private val movieToDelete : LiveData<Movie> get() = _movieToDelete
+    private val _movieToDelete: MutableLiveData<Movie> by lazy { MutableLiveData<Movie>() }
+    private val movieToDelete: LiveData<Movie> get() = _movieToDelete
 
 
     init {
@@ -31,15 +31,15 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
 
     }
 
-    private  fun refreshFavoriteMovies() = viewModelScope.launch{
+    private fun refreshFavoriteMovies() = viewModelScope.launch {
         // map() return a new list otherwise you'll be tracking room livedata which will throw an err
-        _liveDataMovies = repository.getFavoriteMovies().map { it } as MutableLiveData<List<MovieDBModel>>
+        _liveDataMovies =
+            repository.getFavoriteMovies().map { it } as MutableLiveData<List<MovieDBModel>>
     }
 
 
-
     fun addMovieBack() = viewModelScope.launch(Dispatchers.IO) {
-       // repository.insert(movieToDelete.value!!.toDBModel())
+        // repository.insert(movieToDelete.value!!.toDBModel())
         val searchItemUpdate: MovieDBModel? = repository.getMovieById(movieToDelete.value!!.id!!)
         if (searchItemUpdate != null) {
             repository.updateMovie(searchItemUpdate.copy(isFavorite = true))
@@ -50,10 +50,10 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         _movieToDelete.postValue(movie)
         val searchItemUpdate: MovieDBModel = repository.getMovieById(movie.id!!)!!
 
-  if (!searchItemUpdate.isTopRated && !searchItemUpdate.isTrending && !searchItemUpdate.isSearchItem) repository.deleteMovie(movie.toDBModel())
-          else repository.updateMovie(searchItemUpdate.copy(isFavorite = false))
-
-
+        if (!searchItemUpdate.isTopRated && !searchItemUpdate.isTrending && !searchItemUpdate.isSearchItem) repository.deleteMovie(
+            movie.toDBModel()
+        )
+        else repository.updateMovie(searchItemUpdate.copy(isFavorite = false))
 
 
     }
@@ -62,5 +62,24 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         repository.clearFavorites()
     }
 
+    fun searchFavorite(query: String) {
+        viewModelScope.launch {
+            when {
+                query.isNotBlank() -> {
+                    val sanitizedQuery = sanitizeSearchQuery(query)
 
+                    repository.searchFavorite(sanitizedQuery).let {
+                        _liveDataMovies.value = it
+                    }
+                }
+                else -> {
+                }
+            }
+        }
+    }
+
+    private fun sanitizeSearchQuery(query: String): String {
+        val queryWithEscapedQuotes = query.replace(Regex.fromLiteral("\""), "\"\"")
+        return "*\"$queryWithEscapedQuotes\"*"
+    }
 }

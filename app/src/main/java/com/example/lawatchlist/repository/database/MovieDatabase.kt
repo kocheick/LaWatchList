@@ -8,6 +8,7 @@ import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.lawatchlist.R
 import com.example.lawatchlist.model.MovieDBModel
+import com.example.lawatchlist.model.MovieFTS
 import com.example.lawatchlist.utils.DataConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 
 
 @Database(
-    entities = [MovieDBModel::class],
+    entities = [MovieDBModel::class,MovieFTS::class],
     version = 1,
     exportSchema = false
 )
@@ -61,6 +62,7 @@ abstract class MovieDatabase : RoomDatabase() {
                 scope.launch {
                     println("Database created..!")
                     database.movieDao()
+                    db.execSQL("INSERT INTO movie_fts(movie_fts) VALUES ('rebuild')")
 
                         // populateDatabase(db)
 
