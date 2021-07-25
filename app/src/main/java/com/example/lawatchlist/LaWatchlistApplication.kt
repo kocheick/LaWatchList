@@ -9,6 +9,5 @@ class LaWatchlistApplication: Application() {
     override fun onCreate() {
         super.onCreate()
 
-
     }
 }
